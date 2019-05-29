@@ -10,10 +10,10 @@ function readTextFile(file)
 	}
 }
 
-function lineCount(text) {
+function charCount(text, c) {
 	var nLines = 0;
 	for (var i = 0, n = text.length ; i < n; i++) {
-		if (text[i] === '\n') {
+		if (text[i] === c) {
 			nLines++;
 		}
 	}
@@ -22,10 +22,15 @@ function lineCount(text) {
 
 var x = document.getElementsByClassName("w3-table");
 for (var i = 0; i < x.length; i++) {
-	var content = readTextFile("https://raw.githubusercontent.com/ArdiMaster/stellaris-stat-viewer/master/.gitignore").split("\n");
+	var content = readTextFile("example.data").split("\n");
+	var rowcontent;
 
 	for (var j = 0; j < content.length; j++) {
+		rowcontent = content[j].split(",");
 		var row = x[i].insertRow(x[i].rows.length);
-		row.insertCell(row.length).innerHTML = content[j];
+
+		for (var k = 0; k < rowcontent.length; k++) {
+			row.insertCell(row.length).innerHTML = rowcontent[k];
+		}
 	}
 }

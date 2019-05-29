@@ -3,17 +3,23 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="import" href="title.html">
 	</head>
 
 	<body>
+		<div id="include">
+			missing.
+		</div>
+
+		<div class="w3-container">
 		<div class="w3-bar w3-black">
 			<button class="w3-bar-item w3-button" onclick="openTab('overview')">Overview</button>
 			<button class="w3-bar-item w3-button" onclick="openTab('fleets')">Fleets</button>
-			<button class="w3-bar-item w3-button" onclick="openTab('London')">Economy</button>
+			<input type="text" id="searchInput" onkeyup="searchTable()" class="w3-bar-item w3-input w3-white w3-hover-grey w3-hide-small" placeholder="Input" style="width:35%">
 		</div>
 
 		<div id="overview" class="statpage w3-animate-left">
-			<table class="w3-table w3-border">
+			<table class="w3-table">
 				<tr>
 					<th>Name</th>
 					<th>Military</th>
@@ -35,11 +41,20 @@
 				</tr>
 			</table>
 		</div>
+		<div>
+
+		<script src="javascript/search.js">
+		</script>
 
 		<script src="javascript/table.js">
 		</script>
 
 		<script src="javascript/tab.js">
+		</script>
+
+		<script>
+			var element = document.getElementById("include");
+			element.innerHTML = readTextFile("title.html");
 		</script>
 	</body>
 </html>

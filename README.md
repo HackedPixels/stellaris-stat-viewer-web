@@ -1,0 +1,1 @@
+stellaris-stat-viewer-web

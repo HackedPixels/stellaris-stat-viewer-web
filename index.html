@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	</head>
+
+	<body>
+		<div class="w3-bar w3-black">
+			<button class="w3-bar-item w3-button" onclick="openTab('overview')">Overview</button>
+			<button class="w3-bar-item w3-button" onclick="openTab('fleets')">Fleets</button>
+			<button class="w3-bar-item w3-button" onclick="openTab('London')">Economy</button>
+		</div>
+
+		<div id="overview" class="statpage w3-animate-left">
+			<table class="w3-table w3-border">
+				<tr>
+					<th>Name</th>
+					<th>Military</th>
+					<th>Economy</th>
+					<th>Technology</th>
+					<th>Systems owned</th>
+				</tr>
+				<tr id="overview-table">
+				</tr>
+			</table>
+		</div>
+
+		<div id="fleets" class="statpage w3-animate-left" style="display:block">
+			<table class="w3-table w3-border">
+				<tr>
+					<th>Name</th>
+					<th>Total Fleet Power</th>
+					<th># Corvettes</th>
+				</tr>
+			</table>
+		</div>
+
+		<script src="javascript/table.js">
+		</script>
+
+		<script src="javascript/tab.js">
+		</script>
+	</body>
+</html>

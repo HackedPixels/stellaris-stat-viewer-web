@@ -20,6 +20,7 @@ function charCount(text, c) {
 	return nLines;
 }
 
+var visibleTable = "overview";
 var x = document.getElementsByClassName("w3-table");
 for (var i = 0; i < x.length; i++) {
 	var content = readTextFile(x[i].dataset.file).split("\n");

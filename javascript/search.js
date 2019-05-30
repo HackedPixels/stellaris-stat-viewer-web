@@ -3,7 +3,7 @@ var chickens = document.getElementById("chicken").style.display = "none";
 function searchTable() {
 	var input = document.getElementById("searchInput");
 	var filter = input.value.toUpperCase();
-	var table = document.getElementById("overview");
+	var table = document.getElementById(visibleTable);
 
 	var tr = table.getElementsByTagName("tr");
 	var td, txtValue;

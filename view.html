@@ -18,6 +18,9 @@
 			<button class="w3-bar-item w3-button" onclick="openTab('overview')">Overview</button>
 			<button class="w3-bar-item w3-button" onclick="openTab('fleets')">Fleets</button>
 			<input type="text" id="searchInput" onkeyup="searchTable()" class="w3-bar-item w3-input w3-white w3-hover-grey w3-hide-small" placeholder="Input" style="width:35%">
+			<input type="text" id="fileInput" class="w3-bar-item w3-input w3-white w3-hover-green w3-hide-small" placeholder="Fileset" style="width:35%">
+			<button class="w3-btn w3-blue" onclick="loadTables()">OPEN!</button>
+			<button class="w3-btn w3-red" onclick="unloadTables()">DESTROY!</button>
 		</div>
 
 		<div id="overview" class="statpage w3-animate-left">
@@ -65,6 +68,30 @@
 		</script>
 
 		<script src="javascript/include.js">
+		</script>
+
+		<script src="javascript/cookie.js">
+		</script>
+
+		<script>
+			function loadTables() {
+				// load all tables.
+				var name = document.getElementById("fileInput").value.toLowerCase();
+
+				var tables = document.getElementsByClassName("w3-table");
+				for (var i = 0; i < tables.length; i++) {
+					readTextFile("data/" + name +"/" + tables[i].dataset.file, setTableContent, tables[i].id);
+					alert("data/" + name +"/" + tables[i].dataset.file);
+				}
+			}
+
+			function unloadTables() {
+				// clear all the tables.
+				var tables = document.getElementsByClassName("w3-table");
+				for (var i = 0; i < tables.length; i++) {
+					unsetTableContent(tables[i].id);
+				}
+			}
 		</script>
 
 	</body>

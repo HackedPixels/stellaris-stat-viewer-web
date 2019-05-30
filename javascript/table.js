@@ -6,7 +6,7 @@ function setTableContent(tablename, tcontent) {
 	var content = tcontent.split("\n");
 	var rowcontent;
 
-	for (var j = 0; j < content.length; j++) {
+	for (var j = 0; j < content.length - 1; j++) {
 		rowcontent = content[j].split(",");
 		var row = x.insertRow(x.rows.length);
 
@@ -15,6 +15,13 @@ function setTableContent(tablename, tcontent) {
 		}
 	}
 //	}
+}
+
+function unsetTableContent(tablename) {
+		var x = document.getElementById(tablename);
+		for (var j = x.rows.length - 1; j > 0; j--) {
+			x.deleteRow(j);
+		}
 }
 
 function readTextFile(file, callback, id)
@@ -36,9 +43,4 @@ function charCount(text, c) {
 		}
 	}
 	return nLines;
-}
-
-var tables = document.getElementsByClassName("w3-table");
-for (var i = 0; i < tables.length; i++) {
-	readTextFile(tables[i].dataset.file, setTableContent, tables[i].id);
 }

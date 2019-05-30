@@ -1,3 +1,5 @@
+var visibleTable = "overview";
+
 function openTab(tabname) {
 	var i;
 	var x = document.getElementsByClassName("statpage");
@@ -5,5 +7,8 @@ function openTab(tabname) {
 		x[i].style.display = "none";
 	}
 	document.getElementById(tabname).style.display = "block";
+	visibleTable = tabname;
+
+	searchTable();
 }
 openTab('overview');

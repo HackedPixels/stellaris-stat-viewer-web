@@ -1,12 +1,30 @@
-function readTextFile(file)
+function setTableContent(tablename, tcontent) {
+//	var x = document.getElementsByClassName("w3-table");
+	var x = document.getElementById(tablename);
+//	for (var i = 0; i < x.length; i++) {
+//	var content = readTextFile(x[i].dataset.file).split("\n");
+	var content = tcontent.split("\n");
+	var rowcontent;
+
+	for (var j = 0; j < content.length; j++) {
+		rowcontent = content[j].split(",");
+		var row = x.insertRow(x.rows.length);
+
+		for (var k = 0; k < rowcontent.length; k++) {
+			row.insertCell(row.length).innerHTML = rowcontent[k];
+		}
+	}
+//	}
+}
+
+function readTextFile(file, callback, id)
 {
 	var rawFile = new XMLHttpRequest();
-	rawFile.open("GET", file, false);
+	rawFile.responseType = "text";
+	rawFile.open("GET", file, true);
 	rawFile.send(null);
-	if(rawFile.status === 200 || rawFile.status == 0)
-	{
-		var allText = rawFile.responseText;
-		return allText;
+	rawFile.onload = function(e) {
+		callback(id, rawFile.responseText);
 	}
 }
 
@@ -20,18 +38,7 @@ function charCount(text, c) {
 	return nLines;
 }
 
-var visibleTable = "overview";
-var x = document.getElementsByClassName("w3-table");
-for (var i = 0; i < x.length; i++) {
-	var content = readTextFile(x[i].dataset.file).split("\n");
-	var rowcontent;
-
-	for (var j = 0; j < content.length; j++) {
-		rowcontent = content[j].split(",");
-		var row = x[i].insertRow(x[i].rows.length);
-
-		for (var k = 0; k < rowcontent.length; k++) {
-			row.insertCell(row.length).innerHTML = rowcontent[k];
-		}
-	}
+var tables = document.getElementsByClassName("w3-table");
+for (var i = 0; i < tables.length; i++) {
+	readTextFile(tables[i].dataset.file, setTableContent, tables[i].id);
 }

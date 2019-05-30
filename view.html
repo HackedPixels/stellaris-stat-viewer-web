@@ -4,10 +4,12 @@
 	<head>
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 		<link rel="import" href="title.html">
+
+		<meta charset="utf-8">
 	</head>
 
 	<body>
-		<div id="include">
+		<div class="include-file" data-file="title.html">
 			missing.
 		</div>
 
@@ -19,7 +21,7 @@
 		</div>
 
 		<div id="overview" class="statpage w3-animate-left">
-			<table class="w3-table w3-border" data-file="overview.txt">
+			<table id="overview-table" class="w3-table w3-border" data-file="overview.txt">
 				<tr>
 					<th>Name</th>
 					<th>Military</th>
@@ -33,7 +35,7 @@
 		</div>
 
 		<div id="fleets" class="statpage w3-animate-left" style="display:block">
-			<table class="w3-table w3-border" data-file="fleets.txt">
+			<table id="fleets-table" class="w3-table w3-border" data-file="fleets.txt">
 				<tr>
 					<th>Name</th>
 					<th>Total Fleet Power</th>
@@ -62,9 +64,8 @@
 		<script src="javascript/tab.js">
 		</script>
 
-		<script>
-			var element = document.getElementById("include");
-			element.innerHTML = readTextFile("title.html");
+		<script src="javascript/include.js">
 		</script>
+
 	</body>
 </html>

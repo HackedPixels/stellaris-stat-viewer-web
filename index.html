@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	</head>
+
+	<body>
+		<nav id="sidebar" class="w3-sidebar w3-bar-block w3-collapse w3-white w3-animate-left w3-card" style="z-index:3;width:320px;">
+			<!-- Page Title -->
+			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom w3-large">
+				Stellaris Stat Viewer
+				<div style="font-size: 10px">
+					<!-- Add script to fetch commit -->
+					Commit: 8d327f
+				</div>
+			</a>
+
+			<!-- Upload a new gamestate file -->
+			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-dark-grey w3-button w3-hover-black w3-left-align" onclick="document.getElementById('id01').style.display='block'">
+				Upload
+				<img src="res/upload.png" width=16 height=16>
+				</img>
+			</a>
+
+			<!-- See your parsed files -->
+			<a id="myBtn" onclick="openGamestats('gamestates1')" href="javascript:void(0)" class="w3-bar-item w3-button">
+				Gamestats [CLOSED]
+			</a>
+
+			<div id="gamestates1" class="w3-hide w3-animate-left">
+			</div>
+		</nav>
+
+		<!-- Data -->
+
+		<div class="w3-main" style="margin-left:320px;">
+		<!-- table.html -->
+		<div class="w3-container">
+			<div class="w3-bar w3-black">
+				<button class="w3-bar-item w3-button" onclick="openTab('overview')">Overview</button>
+				<button class="w3-bar-item w3-button" onclick="openTab('fleets')">Fleets</button>
+				<input type="text" id="searchInput" onkeyup="searchTable()" class="w3-bar-item w3-input w3-white w3-hover-grey w3-hide-small" placeholder="Input" style="width:35%">
+<!--				<input type="text" id="fileInput" class="w3-bar-item w3-input w3-white w3-hover-green w3-hide-small" placeholder="Fileset" style="width:35%"> -->
+<!--				<button class="w3-btn w3-blue" onclick="loadTables()">OPEN!</button> -->
+				<button class="w3-btn w3-red" onclick="unloadTables()">DESTROY!</button>
+			</div>
+
+			<div id="overview" class="statpage w3-animate-left">
+				<table id="overview-table" class="w3-table w3-border w3-hoverable" data-file="overview.txt">
+					<tr>
+						<th>Name</th>
+						<th>Military</th>
+						<th>Economy</th>
+						<th>Technology</th>
+						<th>Systems owned</th>
+					</tr>
+				</table>
+			</div>
+
+			<div id="fleets" class="statpage w3-animate-left" style="display:block">
+				<table id="fleets-table" class="w3-table w3-border w3-hoverable" data-file="fleets.txt">
+					<tr>
+						<th>Name</th>
+						<th>Total Fleet Power</th>
+						<th># Corvettes</th>
+						<th># Destroyers</th>
+						<th># Cruisers</th>
+						<th># Battleships</th>
+						<th># Titans</th>
+						<th># Colossi</th>
+						<th># FE ships</th>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<div id="chicken" class="w3-panel w3-pale-red w3-leftbar w3-border-red">
+					<p>Nobody here but us chickens.</p>
+				</div>
+
+		<!-- table.html END -->
+		<div id="creative-mammal" class="w3-container statistic">
+		</div>
+	</div>
+
+		<script src="javascript/table.js">
+		</script>
+
+		<script src="javascript/gamestats.js">
+		</script>
+
+		<script src="javascript/search.js">
+		</script>
+
+		<script src="javascript/tab.js">
+		</script>
+
+		<script src="javascript/include.js">
+		</script>
+
+		<script src="javascript/cookie.js">
+		</script>
+
+		<script>
+			function loadTables(name) {
+				unloadTables();
+				// load all tables.
+		//		var name = document.getElementById("fileInput").value.toLowerCase();
+
+				var tables = document.getElementsByClassName("w3-table");
+				for (var i = 0; i < tables.length; i++) {
+					readTextFile("data/" + name +"/" + tables[i].dataset.file, setTableContent, tables[i].id);
+				//	alert("data/" + name +"/" + tables[i].dataset.file);
+				}
+			}
+
+			function unloadTables() {
+				// clear all the tables.
+				var tables = document.getElementsByClassName("w3-table");
+				for (var i = 0; i < tables.length; i++) {
+					unsetTableContent(tables[i].id);
+				}
+			}
+		</script>
+
+		<script>
+			function openGamestats(id) {
+				var x = document.getElementById(id);
+				if (x.className.indexOf("w3-show") == -1) {
+					x.className += " w3-show";
+					x.previousElementSibling.innerText =
+						x.previousElementSibling.innerText.replace("CLOSED", "OPEN");
+					x.previousElementSibling.className += " w3-red";
+					} else {
+						x.className = x.className.replace(" w3-show", "");
+						x.previousElementSibling.className =
+							x.previousElementSibling.className.replace(" w3-red", "");
+						x.previousElementSibling.innerText =
+							x.previousElementSibling.innerText.replace("OPEN", "CLOSED");
+				}
+			}
+		</script>
+	</body>
+</html>

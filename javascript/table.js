@@ -9,6 +9,10 @@ function setTableContent(tablename, tcontent) {
 	for (var j = 0; j < content.length - 1; j++) {
 		rowcontent = content[j].split(",");
 		var row = x.insertRow(x.rows.length);
+		row.onclick = function (e) {
+			var table = document.getElementById(tablename);
+			alert((table.rows[this.rowIndex].innerText).split("\t").join(","));
+		}
 
 		for (var k = 0; k < rowcontent.length; k++) {
 			row.insertCell(row.length).innerHTML = rowcontent[k];

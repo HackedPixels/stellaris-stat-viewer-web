@@ -1,3 +1,5 @@
+var chickens = document.getElementById("chicken").style.display = "none";
+
 function searchTable() {
 	var input = document.getElementById("searchInput");
 	var filter = input.value.toUpperCase();

@@ -22,7 +22,7 @@ function charCount(text, c) {
 
 var x = document.getElementsByClassName("w3-table");
 for (var i = 0; i < x.length; i++) {
-	var content = readTextFile("example.data").split("\n");
+	var content = readTextFile(x[i].dataset.file).split("\n");
 	var rowcontent;
 
 	for (var j = 0; j < content.length; j++) {

@@ -1,2 +1,10 @@
-saathid organism,56803.9,5760.81,16390,303
-dabulan holy covenant,5718.09,1971.64,4395,121
+Tormentors,73,0,0,0,0,0,0,0
+Bruugar Successor,31728,0,0,0,0,0,0,0
+Curator Order,12307,0,0,0,0,0,0,0
+XuraCorp,7200,0,0,0,0,0,0,0
+Artisan Troupe,18983,0,0,0,0,0,0,0
+Tormentors,73,0,0,0,0,0,0,0
+Tormentors,73,0,0,0,0,0,0,0
+Tormentors,73,0,0,0,0,0,0,0
+Tormentors,73,0,0,0,0,0,0,0
+Tormentors,73,0,0,0,0,0,0,0

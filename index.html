@@ -9,11 +9,12 @@
 	<body>
 		<nav id="sidebar" class="w3-sidebar w3-bar-block w3-collapse w3-white w3-animate-left w3-card" style="z-index:3;width:320px;">
 			<!-- Page Title -->
-			<a href="javascript:void(0)" class="w3-bar-item w3-button w3-border-bottom w3-large">
+			<a onclick="showWelcomeMessage()" class="w3-bar-item w3-button w3-border-bottom w3-large">
 				Stellaris Stat Viewer
-				<div style="font-size: 10px">
+				<div id="commitText" style="font-size: 10px">
 					<!-- Add script to fetch commit -->
-					Commit: 8d327f
+					<div id="title" class="include-file" data-file="title.html">
+					</div>
 				</div>
 			</a>
 
@@ -24,9 +25,21 @@
 				</img>
 			</a>
 
+			<div class="w3-row">
+				<div class="w3-col s9">
+					<input id="user_name" class="w3-input"></input>
+				</div>
+
+				<div class="w3-col s3">
+					<button onclick="loadGamestats(document.getElementById('user_name').value);" class="w3-button">
+						LOGIN
+					</button>
+				</div>
+			</div>
+
 			<!-- See your parsed files -->
 			<a id="myBtn" onclick="openGamestats('gamestates1')" href="javascript:void(0)" class="w3-bar-item w3-button">
-				Gamestats [CLOSED]
+				Gamestats ▲
 			</a>
 
 			<div id="gamestates1" class="w3-hide w3-animate-left">
@@ -36,8 +49,17 @@
 		<!-- Data -->
 
 		<div class="w3-main" style="margin-left:320px;">
+		<div id="startupMessage" class="w3-container" style="display:block">
+			<h3> Welcome! </h3>
+			<p>
+				This is a Web Implementation of <a href="https://github.com/ArdiMaster/Stellaris-Stat-Viewer">ArdiMasters Stellaris Stat Viewer</a>.
+				<br>
+				You can get going by <a href="javascript:void(0)">uploading a gamestate file</a>
+			</p>
+		</div>
+
 		<!-- table.html -->
-		<div class="w3-container">
+		<div id="gamestatTables" class="w3-container" style="display:none">
 			<div class="w3-bar w3-black">
 				<button class="w3-bar-item w3-button" onclick="openTab('overview')">Overview</button>
 				<button class="w3-bar-item w3-button" onclick="openTab('fleets')">Fleets</button>
@@ -83,6 +105,38 @@
 		<div id="creative-mammal" class="w3-container statistic">
 		</div>
 	</div>
+
+		<script>
+		function printRepoCount() {
+			var responseObj = JSON.parse(this.responseText);
+
+			var commitText = document.getElementById("commitText");
+			commitText.innerText = "Commit: " + responseObj.sha.substring(0, 8);
+		}
+
+		var request = new XMLHttpRequest();
+		request.onload = printRepoCount;
+		request.open('get', 'https://api.github.com/repos/ArdiMaster/Stellaris-Stat-Viewer/commits/master', true);
+		request.send();
+		</script>
+
+		<script>
+			function showGamestateTable() {
+				var startupMessage = document.getElementById("startupMessage");
+				startupMessage.style.display = "none";
+
+				var gamestatTable = document.getElementById("gamestatTables");
+				gamestatTable.style.display = "block";
+			}
+
+			function showWelcomeMessage() {
+				var startupMessage = document.getElementById("startupMessage");
+				startupMessage.style.display = "block";
+
+				var gamestatTable = document.getElementById("gamestatTables");
+				gamestatTable.style.display = "none";
+			}
+		</script>
 
 		<script src="javascript/table.js">
 		</script>
@@ -130,14 +184,14 @@
 				if (x.className.indexOf("w3-show") == -1) {
 					x.className += " w3-show";
 					x.previousElementSibling.innerText =
-						x.previousElementSibling.innerText.replace("CLOSED", "OPEN");
+						x.previousElementSibling.innerText.replace("▲", "▼");
 					x.previousElementSibling.className += " w3-red";
 					} else {
 						x.className = x.className.replace(" w3-show", "");
 						x.previousElementSibling.className =
 							x.previousElementSibling.className.replace(" w3-red", "");
 						x.previousElementSibling.innerText =
-							x.previousElementSibling.innerText.replace("OPEN", "CLOSED");
+							x.previousElementSibling.innerText.replace("▼", "▲");
 				}
 			}
 		</script>

@@ -1,10 +1,14 @@
 #do touch
-HOSTWEB=$HOME/web
+HOSTWEB=''
 HOSTPORT=80
 
 #dont touch
 WEBPID=''
 ERRORMSG=""
+
+if [ -z ${HOSTWEB} ]; then
+	printf 'HOSTWEB is empty'
+fi
 
 trap "error 'use the exit command'" SIGINT SIGTERM
 

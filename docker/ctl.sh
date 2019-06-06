@@ -47,7 +47,7 @@ while true; do
 			start
 			;;
 		'stop')
-			stop	
+			stop
 			;;
 		'exit')
 			if ! [ -z $WEBPID ]; then

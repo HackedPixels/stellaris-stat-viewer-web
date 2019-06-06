@@ -1,6 +1,7 @@
 #do touch
 HOSTWEB=''
 HOSTPORT=80
+#
 
 #dont touch
 WEBPID=''
@@ -47,7 +48,7 @@ while true; do
 			start
 			;;
 		'stop')
-			stop	
+			stop
 			;;
 		'exit')
 			if ! [ -z $WEBPID ]; then

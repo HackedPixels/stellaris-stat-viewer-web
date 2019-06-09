@@ -20,7 +20,7 @@ start()  {
 	fi
 
 	if [ -z $WEBPID ]; then
-		docker run -p 80:$HOSTPORT --rm --name thttpd -v /home/jan/web:/web/ -t thttp &
+		docker run -p 80:$HOSTPORT --rm --name thttpd -v webstore:/web -t thttp &
 		WEBPID=$!
 	else
 		error 'already running'
@@ -34,6 +34,13 @@ stop() {
 		error 'not running'
 	fi
 	WEBPID=''
+}
+
+update-data() {
+	docker create volume webstore
+	docker run -v webstore:/data --name helper alpine true
+	docker cp $HOSTWEB helper:/data
+	docker rm helper
 }
 
 error() {
@@ -56,6 +63,9 @@ while true; do
 			else
 				exit
 			fi
+			;;
+		'store')
+			update-data();
 			;;
 		'?')
 			printf "%s\n" "$ERRORMSG"

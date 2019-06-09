@@ -30,9 +30,12 @@ function unsetTableContent(tablename) {
 
 function readTextFile(file, callback, id)
 {
+	var splitted_url = window.location.href.split('/');
+	splitted_url.pop();
+	var requestUrl = new URL(splitted_url.join('/') + '/' + file);
 	var rawFile = new XMLHttpRequest();
 	rawFile.responseType = "text";
-	rawFile.open("GET", file, true);
+	rawFile.open("GET", requestUrl, true);
 	rawFile.send(null);
 	rawFile.onload = function(e) {
 		callback(id, rawFile.responseText);

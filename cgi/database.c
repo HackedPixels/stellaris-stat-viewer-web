@@ -1,128 +1,62 @@
 #include "database.h"
 
-#define MAX_PAIRS 10
-
 int
-main(argc, argv)
-	int argc;
-	char** argv;
+newfile(name, content)
+	char* name;
+	char** content;
 {
-	char* str;
-	struct CGI_Data* cgi, *free_cgi;
+	FILE* f;
+	char* s;
 
-	str = getdata();
-	if (str == NULL)
-		return 1;
-	hex2ascii(str);
+	f = fopen(name, "a");
+	if (f == NULL)
+	{
+		f = fopen(name, "w");
+		if (f == NULL)
+		{
+			return 1;
+		}
+	}
 
-	cgi = create_cgi_list(str);
-	free_cgi = cgi;
-	if (cgi == NULL)
-		return 1;
-	while (cgi->next != NULL) {
-		printf("%s -> %s\n", cgi->var, cgi->val);
-		cgi = cgi->next;
+	s = strtok(*content, "\n");
+	while (s != NULL)
+	{
+		fprintf(f, "%s\n", s);
+		s = strtok(NULL, "\n");
 	}
 
 	return 0;
 }
 
-struct CGI_Data*
-create_cgi_list(url)
-	char* url;
+int
+getfile(name)
+	char* name;
 {
-	char* s;
-	char* res;
+	char buf[1024];
+	FILE *file;
+	size_t nread;
 
-	char* pairs[MAX_PAIRS];
-	struct CGI_Data* ptr_data  = NULL;
-	struct CGI_Data* ptr_start = NULL;
-	int i = 0, j = 0;
-
-	res = strtok(s, "&");
-	while (res != NULL && i < MAX_PAIRS)
+	file = fopen(name, "r");
+	if (file)
 	{
-		pairs[i] = (char*) malloc(strlen(res)+1);
-		if (pairs[i] == NULL)
-			return NULL;
-		pairs[i] = res;
-		res = strtok(NULL, "&");
-		i++;
-	}
-
-	while (i > j)
-	{
-		/* first element? */
-		if (ptr_start == NULL)
+		while ((nread = fread(buf, 1, sizeof buf, file)) > 0)
+		fwrite(buf, 1, nread, stdout);
+		if (ferror(file))
 		{
-			ptr_start = (struct CGI_Data*)
-				malloc(sizeof(struct CGI_Data*));
-			if (ptr_start == NULL)
-				return NULL;
-
-			res = strtok(pairs[j], "=");
-			ptr_start->var = res;
-			res = strtok(NULL, "\0");
-			ptr_start->val = malloc(strlen(res)+1);
-
-			if (ptr_start->val == NULL)
-				return NULL;
-			ptr_start->val = res;
-
-			ptr_start->next = malloc(sizeof(struct CGI_Data*));
-			if (ptr_start->next == NULL)
-				return NULL;
-			ptr_data = ptr_start->next;
-			j++;
-		/* the rest */
-		} else {
-			res = strtok(pairs[j], "=");
-			ptr_data->var = malloc(strlen(res)+1);
-			if (ptr_data->var == NULL)
-				return NULL;
-
-			ptr_data->var = res;
-			res = strtok(NULL, "\0");
-			ptr_data->val = malloc(strlen(res)+1);
-			if (ptr_data->val == NULL)
-				return NULL;
-			ptr_data->val = res;
-
-			ptr_data->next = malloc(sizeof(struct CGI_Data*));
-			if (ptr_data->next == NULL)
-				return NULL;
-			ptr_data = ptr_data->next;
-			j++;
+			/* deal with error */
 		}
+		fclose(file);
 	}
-	return ptr_start;
 }
 
-/* Gets data from a HTTP request. */
-char*
-getdata(void)
+int
+delfile(name)
+	char* name;
 {
-	unsigned long size;
-	char* buffer, *cgi_string;
-	char* request;
-	char* cont_len;
-
-	/* Get request type. */
-	request = getenv("REQUEST_METHOD");
-
-	/* request-type defined? */
-	if (request == NULL)
+	if (remove(name) == 0)
 	{
-		return NULL;
-	/* is a GET request? */
-	} else if (strcmp(request, "GET") == 0)
-	{
-		cgi_string = getenv("QUERY_STRING");
-		return (cgi_string == NULL ? NULL : strdup(cgi_string));
-	} else if (strcmp(request, "POST") == 0) {
-		// TODO: implement post method
-		/* unknown method. */
+		return 0;
 	} else {
-		return NULL;
+		return 1;
 	}
 }
